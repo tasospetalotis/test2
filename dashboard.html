@@ -1,5 +1,3 @@
-<!-- dashboard.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +5,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+
+  <style>
+    /* Your styles go here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      display: none;
+    }
+
+    #dashboardContent {
+      display: none;
+    }
+
+    button {
+      margin: 5px;
+    }
+  </style>
 </head>
 
 <body>
+  <h1>Dashboard</h1>
 
-  <h2>Login</h2>
   <form id="loginForm">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required><br>
@@ -20,43 +44,52 @@
     <button type="button" onclick="login()">Login</button>
   </form>
 
-  <div id="dashboard" style="display: none;">
-    <h2>Add Category</h2>
-    <form id="addCategoryForm">
-      <label for="categoryName">Category Name:</label>
-      <input type="text" id="categoryName" name="categoryName" required><br>
-      <button type="button" onclick="addCategory()">Add Category</button>
-    </form>
-
-    <h2>Delete Category</h2>
-    <form id="deleteCategoryForm">
-      <label for="categorySelectorDelete">Select Category:</label>
-      <select id="categorySelectorDelete" name="categorySelectorDelete"></select><br>
-      <button type="button" onclick="deleteCategory()">Delete Category</button>
-    </form>
-
-    <h2>Add Product</h2>
-    <form id="addProductForm">
-      <label for="categorySelector">Select Category:</label>
-      <select id="categorySelector" name="categorySelector"></select><br>
-      <label for="productName">Product Name:</label>
-      <input type="text" id="productName" name="productName" required><br>
-      <label for="productPrice">Product Price:</label>
-      <input type="text" id="productPrice" name="productPrice" required><br>
-      <button type="button" onclick="addProduct()">Add Product</button>
-    </form>
-
-    <h2>Delete Product</h2>
-    <form id="deleteProductForm">
-      <label for="categorySelectorDeleteProduct">Select Category:</label>
-      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct"></select><br>
-      <label for="productSelector">Select Product:</label>
-      <select id="productSelector" name="productSelector"></select><br>
-      <button type="button" onclick="deleteProduct()">Delete Product</button>
-    </form>
+  <div id="dashboardContent">
+    <button onclick="toggleForm()">Add Category</button>
+    <div id="categoriesAndProducts"></div>
   </div>
 
-  <script src="dashboard.js"></script>
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username === 'tasos' && password === '12345') {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('dashboardContent').style.display = 'block';
+        displayCategoriesAndProducts();
+      } else {
+        alert('Invalid username or password');
+      }
+    }
+
+    function toggleForm() {
+      const form = document.getElementById('categoryForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function addCategory() {
+      const categoryName = document.getElementById('categoryName').value;
+      const categoryPrice = document.getElementById('categoryPrice').value;
+
+      // You can save the category data to localStorage here...
+
+      // Display the updated list
+      displayCategoriesAndProducts();
+    }
+
+    function deleteCategory(categoryName) {
+      // You can delete the category data from localStorage here...
+
+      // Display the updated list
+      displayCategoriesAndProducts();
+    }
+
+    function displayCategoriesAndProducts() {
+      const categoriesAndProducts = document.getElementById('categoriesAndProducts');
+      // Fetch category data from localStorage and display it here...
+    }
+  </script>
 </body>
 
 </html>
