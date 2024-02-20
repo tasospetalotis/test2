@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+</head>
+
+<body>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    <button type="button" onclick="login()">Login</button>
+  </form>
+
+  <div id="dashboard" style="display: none;">
+    <h2>Add Category</h2>
+    <form id="addCategoryForm">
+      <label for="categoryName">Category Name:</label>
+      <input type="text" id="categoryName" name="categoryName" required><br>
+      <button type="button" onclick="addCategory()">Add Category</button>
+    </form>
+
+    <h2>Add Product</h2>
+    <form id="addProductForm">
+      <label for="categorySelector">Select Category:</label>
+      <select id="categorySelector" name="categorySelector"></select><br>
+      <label for="productName">Product Name:</label>
+      <input type="text" id="productName" name="productName" required><br>
+      <label for="productPrice">Product Price:</label>
+      <input type="text" id="productPrice" name="productPrice" required><br>
+      <button type="button" onclick="addProduct()">Add Product</button>
+    </form>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+
+</html>
