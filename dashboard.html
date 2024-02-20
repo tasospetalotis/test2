@@ -29,7 +29,7 @@
     <h2>Add Product</h2>
     <form id="addProductForm">
       <label for="categorySelector">Select Category:</label>
-      <select id="categorySelector" name="categorySelector" onchange="loadProducts()"></select><br>
+      <select id="categorySelector" name="categorySelector"></select><br>
       <label for="productName">Product Name:</label>
       <input type="text" id="productName" name="productName" required><br>
       <label for="productPrice">Product Price:</label>
@@ -47,7 +47,7 @@
     <h2>Delete Product</h2>
     <form id="deleteProductForm">
       <label for="categorySelectorDeleteProduct">Select Category:</label>
-      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct" onchange="loadProducts()"></select><br>
+      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct" onchange="loadProductsToDelete()"></select><br>
       <label for="productSelector">Select Product:</label>
       <select id="productSelector" name="productSelector"></select><br>
       <button type="button" onclick="deleteProduct()">Delete Product</button>
