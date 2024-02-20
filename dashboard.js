@@ -1,8 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Call loadCategories when the page loads
-  loadCategories();
-});
-
 function login() {
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
@@ -35,7 +30,7 @@ function addProduct() {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
     categoriesAndProducts[selectedCategoryIndex].products.push({ name: productName, price: productPrice });
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-    loadCategories();  // Reload categories after adding the product
+    loadCategories();
   } else {
     alert('Please select a category.');
   }
@@ -51,9 +46,4 @@ function loadCategories() {
     option.text = category.name;
     categorySelector.add(option);
   });
-
-  // Log the number of options to help debug
-  console.log(categorySelector.options.length);
-}
-
 }
