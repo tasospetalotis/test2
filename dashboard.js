@@ -47,11 +47,11 @@ function deleteCategoryOrProduct() {
     var isCategory = deleteSelector.options[selectedDeleteIndex].classList.contains('category');
 
     if (isCategory) {
-      // Deleting a category
+      // Deleting a category and its products
       categoriesAndProducts.splice(selectedDeleteIndex, 1);
     } else {
       // Deleting a product
-      var selectedCategoryIndex = document.getElementById('categorySelector').selectedIndex;
+      var selectedCategoryIndex = categorySelector.selectedIndex;
       var productIndex = selectedDeleteIndex - categoriesAndProducts[selectedCategoryIndex].products.length;
       categoriesAndProducts[selectedCategoryIndex].products.splice(productIndex, 1);
     }
@@ -73,6 +73,7 @@ function loadCategories() {
   categoriesAndProducts.forEach(function (category, categoryIndex) {
     var option = document.createElement('option');
     option.text = category.name;
+    option.classList.add('category'); // Add class to identify categories
     categorySelector.add(option);
 
     // Adding products to delete dropdown
