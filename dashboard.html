@@ -1,3 +1,5 @@
+<!-- dashboard.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +28,13 @@
       <button type="button" onclick="addCategory()">Add Category</button>
     </form>
 
+    <h2>Delete Category</h2>
+    <form id="deleteCategoryForm">
+      <label for="categorySelectorDelete">Select Category:</label>
+      <select id="categorySelectorDelete" name="categorySelectorDelete"></select><br>
+      <button type="button" onclick="deleteCategory()">Delete Category</button>
+    </form>
+
     <h2>Add Product</h2>
     <form id="addProductForm">
       <label for="categorySelector">Select Category:</label>
@@ -35,6 +44,15 @@
       <label for="productPrice">Product Price:</label>
       <input type="text" id="productPrice" name="productPrice" required><br>
       <button type="button" onclick="addProduct()">Add Product</button>
+    </form>
+
+    <h2>Delete Product</h2>
+    <form id="deleteProductForm">
+      <label for="categorySelectorDeleteProduct">Select Category:</label>
+      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct"></select><br>
+      <label for="productSelectorDelete">Select Product:</label>
+      <select id="productSelectorDelete" name="productSelectorDelete"></select><br>
+      <button type="button" onclick="deleteProduct()">Delete Product</button>
     </form>
   </div>
 
