@@ -36,6 +36,20 @@ function addProduct() {
   }
 }
 
+function deleteCategory() {
+  var categorySelector = document.getElementById('categorySelector');
+  var selectedCategoryIndex = categorySelector.selectedIndex;
+
+  if (selectedCategoryIndex !== -1) {
+    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    categoriesAndProducts.splice(selectedCategoryIndex, 1);
+    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+    loadCategories();
+  } else {
+    alert('Please select a category to delete.');
+  }
+}
+
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
   var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
