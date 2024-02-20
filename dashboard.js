@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
+  loadCategories();
+});
+
 function login() {
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
@@ -6,6 +10,8 @@ function login() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     loadCategories();
+    loadCategoriesToDelete();
+    loadCategoriesForProductToDelete();
   } else {
     alert('Invalid username or password');
   }
@@ -18,6 +24,8 @@ function addCategory() {
   categoriesAndProducts.push(newCategory);
   localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
   loadCategories();
+  loadCategoriesToDelete();
+  loadCategoriesForProductToDelete();
 }
 
 function addProduct() {
@@ -36,52 +44,91 @@ function addProduct() {
   }
 }
 
-function deleteCategoryOrProduct() {
-  var deleteSelector = document.getElementById('deleteSelector');
-  var selectedDeleteIndex = deleteSelector.selectedIndex;
+function loadCategories() {
+  var categorySelector = document.getElementById('categorySelector');
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+  categorySelector.innerHTML = '';
 
-  if (selectedDeleteIndex !== -1) {
+  categoriesAndProducts.forEach(function (category) {
+    var option = document.createElement('option');
+    option.text = category.name;
+    categorySelector.add(option);
+  });
+}
+
+function loadCategoriesToDelete() {
+  var categoryToDeleteSelector = document.getElementById('categoryToDelete');
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+  categoryToDeleteSelector.innerHTML = '';
+
+  categoriesAndProducts.forEach(function (category) {
+    var option = document.createElement('option');
+    option.text = category.name;
+    categoryToDeleteSelector.add(option);
+  });
+}
+
+function loadCategoriesForProductToDelete() {
+  var categoryForProductToDeleteSelector = document.getElementById('categoryForProductToDelete');
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+  categoryForProductToDeleteSelector.innerHTML = '';
+
+  categoriesAndProducts.forEach(function (category) {
+    var option = document.createElement('option');
+    option.text = category.name;
+    categoryForProductToDeleteSelector.add(option);
+  });
+
+  loadProductsToDelete(); // Load products for the initial category
+}
+
+function loadProductsToDelete() {
+  var categoryForProductToDeleteSelector = document.getElementById('categoryForProductToDelete');
+  var selectedCategoryIndex = categoryForProductToDeleteSelector.selectedIndex;
+  var productToDeleteSelector = document.getElementById('productToDelete');
+  productToDeleteSelector.innerHTML = '';
+
+  if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
 
-    // Check if the selected item is a category or a product
-    var isCategory = deleteSelector.options[selectedDeleteIndex].classList.contains('category');
-
-    if (isCategory) {
-      // Deleting a category and its products
-      categoriesAndProducts.splice(selectedDeleteIndex, 1);
-    } else {
-      // Deleting a product
-      var selectedCategoryIndex = categorySelector.selectedIndex;
-      var productIndex = selectedDeleteIndex - categoriesAndProducts[selectedCategoryIndex].products.length;
-      categoriesAndProducts[selectedCategoryIndex].products.splice(productIndex, 1);
-    }
-
-    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-    loadCategories();
-  } else {
-    alert('Please select a category or product to delete.');
+    selectedCategory.products.forEach(function (product, index) {
+      var option = document.createElement('option');
+      option.text = product.name;
+      productToDeleteSelector.add(option);
+    });
   }
 }
 
-function loadCategories() {
-  var categorySelector = document.getElementById('categorySelector');
-  var deleteSelector = document.getElementById('deleteSelector');
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-  categorySelector.innerHTML = '';
-  deleteSelector.innerHTML = '';
+function deleteCategory() {
+  var categoryToDeleteSelector = document.getElementById('categoryToDelete');
+  var selectedCategoryIndex = categoryToDeleteSelector.selectedIndex;
 
-  categoriesAndProducts.forEach(function (category, categoryIndex) {
-    var option = document.createElement('option');
-    option.text = category.name;
-    option.classList.add('category'); // Add class to identify categories
-    categorySelector.add(option);
+  if (selectedCategoryIndex !== -1) {
+    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    categoriesAndProducts.splice(selectedCategoryIndex, 1);
+    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+    loadCategories();
+    loadCategoriesToDelete();
+    loadCategoriesForProductToDelete();
+  } else {
+    alert('Please select a category to delete.');
+  }
+}
 
-    // Adding products to delete dropdown
-    category.products.forEach(function (product) {
-      var productOption = document.createElement('option');
-      productOption.text = product.name;
-      productOption.classList.add('product'); // Add class to identify products
-      deleteSelector.add(productOption);
-    });
-  });
+function deleteProduct() {
+  var categoryForProductToDeleteSelector = document.getElementById('categoryForProductToDelete');
+  var selectedCategoryIndex = categoryForProductToDeleteSelector.selectedIndex;
+  var productToDeleteSelector = document.getElementById('productToDelete');
+  var selectedProductIndex = productToDeleteSelector.selectedIndex;
+
+  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
+    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
+    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+    loadCategories();
+    loadProductsToDelete();
+  } else {
+    alert('Please select a category and a product to delete.');
+  }
 }
