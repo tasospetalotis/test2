@@ -1,31 +1,24 @@
-// homepage.js
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Load categories from localStorage
-  const storedCategories = localStorage.getItem('categories');
-  const categories = storedCategories ? JSON.parse(storedCategories) : [];
-
-  // Display categories and products
-  displayCategoriesAndProducts(categories);
+document.addEventListener('DOMContentLoaded', function () {
+  loadCategoriesAndProducts();
 });
 
-function displayCategoriesAndProducts(categories) {
-  var categoriesAndProductsContainer = document.getElementById('categoriesAndProducts');
-  categoriesAndProductsContainer.innerHTML = '';
+function loadCategoriesAndProducts() {
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
+  var categoriesAndProductsDiv = document.getElementById('categoriesAndProducts');
+  categoriesAndProductsDiv.innerHTML = '';
 
-  categories.forEach(function (category) {
-    var categoryDiv = document.createElement('div');
-    categoryDiv.innerHTML = `<h3>${category.name}</h3>`;
+  for (var category in categoriesAndProducts) {
+    var categoryHeading = document.createElement('h3');
+    categoryHeading.textContent = category;
+    categoriesAndProductsDiv.appendChild(categoryHeading);
 
     var productList = document.createElement('ul');
-
-    category.products.forEach(function (product) {
+    categoriesAndProducts[category].forEach(function (product) {
       var listItem = document.createElement('li');
-      listItem.textContent = `${product.name}: $${product.price.toFixed(2)}`;
+      listItem.textContent = `${product.name} - $${product.price}`;
       productList.appendChild(listItem);
     });
 
-    categoryDiv.appendChild(productList);
-    categoriesAndProductsContainer.appendChild(categoryDiv);
-  });
+    categoriesAndProductsDiv.appendChild(productList);
+  }
 }
