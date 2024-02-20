@@ -3,22 +3,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loadCategoriesAndProducts() {
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
   var categoriesAndProductsDiv = document.getElementById('categoriesAndProducts');
   categoriesAndProductsDiv.innerHTML = '';
 
-  for (var category in categoriesAndProducts) {
+  categoriesAndProducts.forEach(function (category) {
     var categoryHeading = document.createElement('h3');
-    categoryHeading.textContent = category;
+    categoryHeading.textContent = category.name;
     categoriesAndProductsDiv.appendChild(categoryHeading);
 
     var productList = document.createElement('ul');
-    categoriesAndProducts[category].forEach(function (product) {
+    category.products.forEach(function (product) {
       var listItem = document.createElement('li');
       listItem.textContent = `${product.name} - $${product.price}`;
       productList.appendChild(listItem);
     });
 
     categoriesAndProductsDiv.appendChild(productList);
-  }
+  });
 }
