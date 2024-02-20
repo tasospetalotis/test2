@@ -36,28 +36,51 @@ function addProduct() {
   }
 }
 
-function deleteCategory() {
-  var categorySelector = document.getElementById('categorySelector');
-  var selectedCategoryIndex = categorySelector.selectedIndex;
+function deleteCategoryOrProduct() {
+  var deleteSelector = document.getElementById('deleteSelector');
+  var selectedDeleteIndex = deleteSelector.selectedIndex;
 
-  if (selectedCategoryIndex !== -1) {
+  if (selectedDeleteIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    categoriesAndProducts.splice(selectedCategoryIndex, 1);
+
+    // Check if the selected item is a category or a product
+    var isCategory = deleteSelector.options[selectedDeleteIndex].classList.contains('category');
+
+    if (isCategory) {
+      // Deleting a category
+      categoriesAndProducts.splice(selectedDeleteIndex, 1);
+    } else {
+      // Deleting a product
+      var selectedCategoryIndex = document.getElementById('categorySelector').selectedIndex;
+      var productIndex = selectedDeleteIndex - categoriesAndProducts[selectedCategoryIndex].products.length;
+      categoriesAndProducts[selectedCategoryIndex].products.splice(productIndex, 1);
+    }
+
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
     loadCategories();
   } else {
-    alert('Please select a category to delete.');
+    alert('Please select a category or product to delete.');
   }
 }
 
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
+  var deleteSelector = document.getElementById('deleteSelector');
   var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
   categorySelector.innerHTML = '';
+  deleteSelector.innerHTML = '';
 
-  categoriesAndProducts.forEach(function (category) {
+  categoriesAndProducts.forEach(function (category, categoryIndex) {
     var option = document.createElement('option');
     option.text = category.name;
     categorySelector.add(option);
+
+    // Adding products to delete dropdown
+    category.products.forEach(function (product) {
+      var productOption = document.createElement('option');
+      productOption.text = product.name;
+      productOption.classList.add('product'); // Add class to identify products
+      deleteSelector.add(productOption);
+    });
   });
 }
