@@ -33,15 +33,14 @@ function addProduct() {
     categoriesAndProducts[selectedCategoryIndex].products.push({ name: productName, price: productPrice });
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
     loadCategories();
-    loadProducts();
   } else {
     alert('Please select a category.');
   }
 }
 
 function deleteCategory() {
-  var categorySelector = document.getElementById('categorySelectorToDelete');
-  var selectedCategoryIndex = categorySelector.selectedIndex;
+  var categorySelectorToDelete = document.getElementById('categorySelectorToDelete');
+  var selectedCategoryIndex = categorySelectorToDelete.selectedIndex;
 
   if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
@@ -49,67 +48,54 @@ function deleteCategory() {
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
     loadCategories();
     loadCategoriesToDelete();
-    loadProducts();
   } else {
     alert('Please select a category to delete.');
   }
 }
 
-function deleteProduct() {
-  var categorySelector = document.getElementById('categorySelectorDeleteProduct');
-  var selectedCategoryIndex = categorySelector.selectedIndex;
-  var productSelector = document.getElementById('productSelector');
-  var selectedProductIndex = productSelector.selectedIndex;
+function loadCategoriesToDelete() {
+  var categorySelectorToDelete = document.getElementById('categorySelectorToDelete');
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+  categorySelectorToDelete.innerHTML = '';
 
-  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
+  categoriesAndProducts.forEach(function (category) {
+    var option = document.createElement('option');
+    option.text = category.name;
+    categorySelectorToDelete.add(option);
+  });
+}
+
+function loadProductsToDelete() {
+  var categorySelectorDeleteProduct = document.getElementById('categorySelectorDeleteProduct');
+  var selectedCategoryIndex = categorySelectorDeleteProduct.selectedIndex;
+  var productSelector = document.getElementById('productSelector');
+  productSelector.innerHTML = '';
+
+  if (selectedCategoryIndex !== -1) {
+    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
+
+    selectedCategory.products.forEach(function (product, index) {
+      var option = document.createElement('option');
+      option.text = product.name;
+      option.value = index;
+      productSelector.add(option);
+    });
+  }
+}
+
+function deleteProduct() {
+  var categorySelectorDeleteProduct = document.getElementById('categorySelectorDeleteProduct');
+  var selectedCategoryIndex = categorySelectorDeleteProduct.selectedIndex;
+  var productSelector = document.getElementById('productSelector');
+  var selectedProductIndex = productSelector.value;
+
+  if (selectedCategoryIndex !== -1 && selectedProductIndex !== '') {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
     categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
     loadCategories();
-    loadProducts();
   } else {
     alert('Please select a category and a product to delete.');
-  }
-}
-
-function loadCategories() {
-  var categorySelector = document.getElementById('categorySelector');
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-  categorySelector.innerHTML = '';
-
-  categoriesAndProducts.forEach(function (category) {
-    var option = document.createElement('option');
-    option.text = category.name;
-    categorySelector.add(option);
-  });
-}
-
-function loadCategoriesToDelete() {
-  var categorySelector = document.getElementById('categorySelectorToDelete');
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-  categorySelector.innerHTML = '';
-
-  categoriesAndProducts.forEach(function (category) {
-    var option = document.createElement('option');
-    option.text = category.name;
-    categorySelector.add(option);
-  });
-}
-
-function loadProducts() {
-  var categorySelector = document.getElementById('categorySelector');
-  var productSelector = document.getElementById('productSelector');
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-  var selectedCategoryIndex = categorySelector.selectedIndex;
-
-  productSelector.innerHTML = '';
-
-  if (selectedCategoryIndex !== -1) {
-    var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
-    selectedCategory.products.forEach(function (product) {
-      var option = document.createElement('option');
-      option.text = product.name;
-      productSelector.add(option);
-    });
   }
 }
