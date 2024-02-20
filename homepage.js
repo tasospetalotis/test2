@@ -1,24 +1,23 @@
-document.addEventListener('DOMContentLoaded', function () {
-  loadCategoriesAndProducts();
-});
+// homepage.js
+
+// Define an empty array to store categories and products
+let categoriesAndProducts = [];
 
 function loadCategoriesAndProducts() {
-  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
-  var categoriesAndProductsDiv = document.getElementById('categoriesAndProducts');
-  categoriesAndProductsDiv.innerHTML = '';
+  // Load data from localStorage
+  const storedData = localStorage.getItem('categoriesAndProducts');
 
-  for (var category in categoriesAndProducts) {
-    var categoryHeading = document.createElement('h3');
-    categoryHeading.textContent = category;
-    categoriesAndProductsDiv.appendChild(categoryHeading);
+  // Parse the stored data or use an empty array if it doesn't exist
+  categoriesAndProducts = storedData ? JSON.parse(storedData) : [];
 
-    var productList = document.createElement('ul');
-    categoriesAndProducts[category].forEach(function (product) {
-      var listItem = document.createElement('li');
-      listItem.textContent = `${product.name} - $${product.price}`;
-      productList.appendChild(listItem);
-    });
-
-    categoriesAndProductsDiv.appendChild(productList);
-  }
+  // Display categories and products
+  displayCategoriesAndProducts();
 }
+
+function displayCategoriesAndProducts() {
+  // Your code to display categories and products
+  console.log(categoriesAndProducts);
+}
+
+// Call loadCategoriesAndProducts() when the page loads
+loadCategoriesAndProducts();
