@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', function () {
+  // Call loadCategories when the page loads
+  loadCategories();
+});
+
 function login() {
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
