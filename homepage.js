@@ -4,27 +4,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function loadCategoriesAndProducts() {
   var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-  var categoriesAndProductsDiv = document.getElementById('categoriesAndProducts');
-  categoriesAndProductsDiv.innerHTML = '';
+  var categoriesAndProductsContainer = document.getElementById('categoriesAndProducts');
+  categoriesAndProductsContainer.innerHTML = '';
 
   categoriesAndProducts.forEach(function (category) {
-    var categoryDiv = document.createElement('div');
-    categoryDiv.innerHTML = '<h3>' + category.name + '</h3>';
+    var categoryElement = document.createElement('div');
+    categoryElement.innerHTML = '<h3>' + category.name + '</h3>';
 
     if (category.products.length > 0) {
-      var productsList = document.createElement('ul');
+      var productList = document.createElement('ul');
 
       category.products.forEach(function (product) {
         var productItem = document.createElement('li');
-        productItem.textContent = product.name + ' - $' + product.price;
-        productsList.appendChild(productItem);
+        productItem.textContent = product.name + ': $' + product.price;
+        productList.appendChild(productItem);
       });
 
-      categoryDiv.appendChild(productsList);
-    } else {
-      categoryDiv.innerHTML += '<p>No products available.</p>';
+      categoryElement.appendChild(productList);
     }
 
-    categoriesAndProductsDiv.appendChild(categoryDiv);
+    categoriesAndProductsContainer.appendChild(categoryElement);
   });
 }
