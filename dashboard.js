@@ -30,4 +30,21 @@ function displayCategories(categories) {
   });
 }
 
-// Other functions for login, addCategory, deleteCategory, addProduct, deleteProduct
+// Login function with username and password validation
+function login() {
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+
+  // Check if username and password are correct
+  if (username === 'tasos' && password === '12345') {
+    // Show the dashboard
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  } else {
+    alert('Invalid username or password');
+  }
+}
+
+// Other functions for addCategory, deleteCategory, addProduct, deleteProduct
+
+// Add your existing addCategory, deleteCategory, addProduct, and deleteProduct functions here
