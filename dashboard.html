@@ -29,12 +29,28 @@
     <h2>Add Product</h2>
     <form id="addProductForm">
       <label for="categorySelector">Select Category:</label>
-      <select id="categorySelector" name="categorySelector"></select><br>
+      <select id="categorySelector" name="categorySelector" onchange="loadProducts()"></select><br>
       <label for="productName">Product Name:</label>
       <input type="text" id="productName" name="productName" required><br>
       <label for="productPrice">Product Price:</label>
       <input type="text" id="productPrice" name="productPrice" required><br>
       <button type="button" onclick="addProduct()">Add Product</button>
+    </form>
+
+    <h2>Delete Category</h2>
+    <form id="deleteCategoryForm">
+      <label for="categorySelectorToDelete">Select Category:</label>
+      <select id="categorySelectorToDelete" name="categorySelectorToDelete"></select><br>
+      <button type="button" onclick="deleteCategory()">Delete Category</button>
+    </form>
+
+    <h2>Delete Product</h2>
+    <form id="deleteProductForm">
+      <label for="categorySelectorDeleteProduct">Select Category:</label>
+      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct" onchange="loadProducts()"></select><br>
+      <label for="productSelector">Select Product:</label>
+      <select id="productSelector" name="productSelector"></select><br>
+      <button type="button" onclick="deleteProduct()">Delete Product</button>
     </form>
   </div>
 
