@@ -1,17 +1,29 @@
 {
-  "categories": [
+  "categoriesAndProducts": [
     {
       "name": "Coffee",
       "products": [
-        { "name": "Espresso", "price": 2.50 },
-        { "name": "Latte", "price": 4.00 }
+        { "name": "Espresso", "price": "2.50" },
+        { "name": "DoubleEspresso", "price": "3.00" },
+        { "name": "Latte", "price": "4.00" },
+        { "name": "Lungo", "price": "2.50" },
+        { "name": "Americano", "price": "3.00" }
       ]
     },
     {
       "name": "Drinks",
       "products": [
-        { "name": "Coca Cola", "price": 1.50 },
-        { "name": "Fanta", "price": 1.50 }
+        { "name": "CocaCola", "price": "1.50" },
+        { "name": "Fanta", "price": "1.50" },
+        { "name": "Sprite", "price": "1.50" }
+      ]
+    },
+    {
+      "name": "Food",
+      "products": [
+        { "name": "Burger", "price": "5.00" },
+        { "name": "Salad", "price": "4.00" },
+        { "name": "Toast", "price": "3.50" }
       ]
     }
   ]
