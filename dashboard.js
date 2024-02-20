@@ -1,48 +1,49 @@
-// Load data from JSON
-let data;
-fetch('data.json')
-  .then(response => response.json())
-  .then(jsonData => {
-    data = jsonData;
-    populateCategorySelector();
-  });
-
-function populateCategorySelector() {
-  const categorySelector = document.getElementById('categorySelector');
-  data.categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category.name;
-    option.textContent = category.name;
-    categorySelector.appendChild(option);
-  });
-}
-
 function login() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
 
   if (username === 'tasos' && password === '12345') {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+    loadCategories();
   } else {
     alert('Invalid username or password');
   }
 }
 
 function addCategory() {
-  const categoryName = document.getElementById('categoryName').value;
-  data.categories.push({ name: categoryName, products: [] });
-  populateCategorySelector();
+  var categoryName = document.getElementById('categoryName').value;
+  var categorySelector = document.getElementById('categorySelector');
+  var option = document.createElement('option');
+  option.text = categoryName;
+  categorySelector.add(option);
 }
 
 function addProduct() {
-  const categorySelector = document.getElementById('categorySelector');
-  const selectedCategory = categorySelector.value;
-  const productName = document.getElementById('productName').value;
-  const productPrice = parseFloat(document.getElementById('productPrice').value);
+  var categorySelector = document.getElementById('categorySelector');
+  var selectedCategory = categorySelector.options[categorySelector.selectedIndex].text;
+  var productName = document.getElementById('productName').value;
+  var productPrice = document.getElementById('productPrice').value;
 
-  const category = data.categories.find(cat => cat.name === selectedCategory);
-  if (category) {
-    category.products.push({ name: productName, price: productPrice });
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
+  if (!categoriesAndProducts[selectedCategory]) {
+    categoriesAndProducts[selectedCategory] = [];
+  }
+  categoriesAndProducts[selectedCategory].push({ name: productName, price: productPrice });
+
+  localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+
+  loadCategories();
+}
+
+function loadCategories() {
+  var categorySelector = document.getElementById('categorySelector');
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
+  categorySelector.innerHTML = '';
+
+  for (var category in categoriesAndProducts) {
+    var option = document.createElement('option');
+    option.text = category;
+    categorySelector.add(option);
   }
 }
