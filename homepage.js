@@ -1,28 +1,24 @@
-// Load data from JSON
-let data;
-fetch('data.json')
-  .then(response => response.json())
-  .then(jsonData => {
-    data = jsonData;
-    displayCategoriesAndProducts();
-  });
+document.addEventListener('DOMContentLoaded', function () {
+  loadCategoriesAndProducts();
+});
 
-function displayCategoriesAndProducts() {
-  const categoriesAndProducts = document.getElementById('categoriesAndProducts');
-  data.categories.forEach(category => {
-    const categoryDiv = document.createElement('div');
-    categoryDiv.innerHTML = `<h3>${category.name}</h3>`;
-    if (category.products.length > 0) {
-      const productList = document.createElement('ul');
-      category.products.forEach(product => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${product.name} - $${product.price.toFixed(2)}`;
-        productList.appendChild(listItem);
-      });
-      categoryDiv.appendChild(productList);
-    } else {
-      categoryDiv.innerHTML += '<p>No products available.</p>';
-    }
-    categoriesAndProducts.appendChild(categoryDiv);
-  });
+function loadCategoriesAndProducts() {
+  var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || {};
+  var categoriesAndProductsDiv = document.getElementById('categoriesAndProducts');
+  categoriesAndProductsDiv.innerHTML = '';
+
+  for (var category in categoriesAndProducts) {
+    var categoryHeading = document.createElement('h3');
+    categoryHeading.textContent = category;
+    categoriesAndProductsDiv.appendChild(categoryHeading);
+
+    var productList = document.createElement('ul');
+    categoriesAndProducts[category].forEach(function (product) {
+      var listItem = document.createElement('li');
+      listItem.textContent = `${product.name} - $${product.price}`;
+      productList.appendChild(listItem);
+    });
+
+    categoriesAndProductsDiv.appendChild(productList);
+  }
 }
