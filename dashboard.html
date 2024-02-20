@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
@@ -38,11 +37,20 @@
       <button type="button" onclick="addProduct()">Add Product</button>
     </form>
 
-    <h2>Delete Category or Product</h2>
-    <form id="deleteForm">
-      <label for="deleteSelector">Select Category or Product:</label>
-      <select id="deleteSelector" name="deleteSelector"></select><br>
-      <button type="button" onclick="deleteCategoryOrProduct()">Delete</button>
+    <h2>Delete Category</h2>
+    <form id="deleteCategoryForm">
+      <label for="categorySelectorToDelete">Select Category:</label>
+      <select id="categorySelectorToDelete" name="categorySelectorToDelete"></select><br>
+      <button type="button" onclick="deleteCategory()">Delete Category</button>
+    </form>
+
+    <h2>Delete Product</h2>
+    <form id="deleteProductForm">
+      <label for="categorySelectorDeleteProduct">Select Category:</label>
+      <select id="categorySelectorDeleteProduct" name="categorySelectorDeleteProduct" onchange="loadProductsToDelete()"></select><br>
+      <label for="productSelector">Select Product:</label>
+      <select id="productSelector" name="productSelector"></select><br>
+      <button type="button" onclick="deleteProduct()">Delete Product</button>
     </form>
   </div>
 
