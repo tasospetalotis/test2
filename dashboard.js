@@ -45,17 +45,11 @@ function addCategory() {
 }
 
 function deleteCategory(categoryName) {
-  // Find the index of the category in the array
-  const index = categoriesAndProducts.findIndex(category => category.name === categoryName);
+  // Remove the category and its products
+  categoriesAndProducts = categoriesAndProducts.filter(category => category.name !== categoryName);
 
-  // Check if the category was found
-  if (index !== -1) {
-    // Remove the category from the array
-    categoriesAndProducts.splice(index, 1);
-
-    // Save the updated data to localStorage
-    saveCategoriesAndProducts();
-  }
+  // Save the updated data to localStorage
+  saveCategoriesAndProducts();
 }
 
 function addProduct() {
@@ -84,17 +78,11 @@ function deleteProduct(categoryName, productName) {
 
   // Check if the category and product exist
   if (category) {
-    // Find the index of the product in the category
-    const index = category.products.findIndex(product => product.name === productName);
+    // Remove the product from the category
+    category.products = category.products.filter(product => product.name !== productName);
 
-    // Check if the product was found
-    if (index !== -1) {
-      // Remove the product from the category
-      category.products.splice(index, 1);
-
-      // Save the updated data to localStorage
-      saveCategoriesAndProducts();
-    }
+    // Save the updated data to localStorage
+    saveCategoriesAndProducts();
   }
 }
 
