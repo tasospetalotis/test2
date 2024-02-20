@@ -51,4 +51,9 @@ function loadCategories() {
     option.text = category.name;
     categorySelector.add(option);
   });
+
+  // Log the number of options to help debug
+  console.log(categorySelector.options.length);
+}
+
 }
