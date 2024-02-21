@@ -36,21 +36,27 @@ function addProduct() {
   }
 }
 
-function deleteCategory() {
+function confirmDeleteCategory() {
   var categorySelector = document.getElementById('categorySelector');
   var selectedCategoryIndex = categorySelector.selectedIndex;
 
   if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    categoriesAndProducts.splice(selectedCategoryIndex, 1);
-    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-    loadCategories();
+    var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
+
+    var confirmDelete = confirm("Are you sure you want to delete the category '" + selectedCategory.name + "'?");
+    if (confirmDelete) {
+      categoriesAndProducts.splice(selectedCategoryIndex, 1);
+      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+      loadCategories();
+      loadProducts(); // update the product selector after category deletion
+    }
   } else {
     alert('Please select a category to delete.');
   }
 }
 
-function deleteProduct() {
+function confirmDeleteProduct() {
   var categorySelector = document.getElementById('categorySelector');
   var selectedCategoryIndex = categorySelector.selectedIndex;
   var productSelector = document.getElementById('productSelector');
@@ -58,9 +64,14 @@ function deleteProduct() {
 
   if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
-    localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-    loadCategories();
+    var selectedProduct = categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex];
+
+    var confirmDelete = confirm("Are you sure you want to delete the product '" + selectedProduct.name + "'?");
+    if (confirmDelete) {
+      categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
+      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+      loadProducts(); // update the product selector after product deletion
+    }
   } else {
     alert('Please select a category and a product to delete.');
   }
