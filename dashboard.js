@@ -64,9 +64,8 @@ function confirmDeleteProduct() {
 
   if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    var selectedProduct = categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex];
 
-    var confirmDelete = confirm("Are you sure you want to delete the product '" + selectedProduct.name + "'?");
+    var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
     if (confirmDelete) {
       categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
       localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
@@ -76,6 +75,7 @@ function confirmDeleteProduct() {
     alert('Please select a category and a product to delete.');
   }
 }
+
 
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
