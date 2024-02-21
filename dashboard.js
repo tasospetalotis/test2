@@ -58,21 +58,26 @@ function confirmDeleteCategory() {
 
 function confirmDeleteProduct() {
   var categorySelector = document.getElementById('categorySelector');
-  var selectedCategoryIndex = categorySelector.selectedIndex;
   var productSelector = document.getElementById('productSelector');
-  var selectedProductIndex = productSelector.selectedIndex;
 
-  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
-    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+  if (categorySelector && productSelector) {
+    var selectedCategoryIndex = categorySelector.selectedIndex;
+    var selectedProductIndex = productSelector.selectedIndex;
 
-    var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
-    if (confirmDelete) {
-      categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
-      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-      loadProducts(); // update the product selector after product deletion
+    if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
+      var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+
+      var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
+      if (confirmDelete) {
+        categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
+        localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+        loadProducts(); // update the product selector after product deletion
+      }
+    } else {
+      alert('Please select a category and a product to delete.');
     }
   } else {
-    alert('Please select a category and a product to delete.');
+    console.error("Category or product selector not found.");
   }
 }
 
