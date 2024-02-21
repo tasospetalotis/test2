@@ -11,7 +11,11 @@ function login() {
   } else {
     alert('Invalid username or password');
   }
+
+  // Prevent form submission
+  return false;
 }
+
 
 
 function addCategory() {
