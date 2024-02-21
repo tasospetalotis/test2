@@ -66,7 +66,12 @@ function deleteProduct() {
       // Instead of directly deleting, mark as hidden
       categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].hidden = true;
       localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-      loadProducts(); // update the product selector after product deletion
+
+      // Remove the option from the product selector
+      productSelector.remove(selectedProductIndex);
+
+      // Update the product selector after product deletion
+      loadProducts();
     }
   } else {
     alert('Please select a category and a product to delete.');
