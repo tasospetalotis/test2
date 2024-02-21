@@ -124,18 +124,22 @@ function loadProducts() {
   var selectedCategoryIndex = categorySelector.selectedIndex;
   var productSelector = document.getElementById('productToDelete');
 
-  if (selectedCategoryIndex !== -1 && productSelector) {
+  if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
     var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
 
     productSelector.innerHTML = '';
 
-    selectedCategory.products.forEach(function (product) {
-      var option = document.createElement('option');
-      option.text = product.name;
-      productSelector.add(option);
-    });
+    // Iterate through visible products and add them to the dropdown
+    selectedCategory.products
+      .filter(product => !product.hidden)
+      .forEach(function (product) {
+        var option = document.createElement('option');
+        option.text = product.name;
+        productSelector.add(option);
+      });
   } else {
     productSelector.innerHTML = '';
   }
 }
+
