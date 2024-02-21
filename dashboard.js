@@ -16,8 +16,6 @@ function login() {
   return false;
 }
 
-
-
 function addCategory() {
   var categoryName = document.getElementById('categoryName').value;
   var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
@@ -91,7 +89,7 @@ function loadCategories() {
 
   if (categorySelector && categoryToDeleteSelector && categoryForProductToDeleteSelector) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    
+
     categorySelector.innerHTML = '';
     categoryToDeleteSelector.innerHTML = '';
     categoryForProductToDeleteSelector.innerHTML = '';
