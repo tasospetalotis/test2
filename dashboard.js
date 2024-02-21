@@ -121,7 +121,7 @@ function loadCategories() {
 }
 
 function loadProducts() {
-  var categorySelector = document.getElementById('categoryForProductToDelete');
+  var categorySelector = document.getElementById('categoryForProductToDelete'); // Updated ID here
   var selectedCategoryIndex = categorySelector.selectedIndex;
   var productSelector = document.getElementById('productToDelete');
   
@@ -140,5 +140,7 @@ function loadProducts() {
     productSelector.innerHTML = '';
   }
 }
+
+
 
 }
