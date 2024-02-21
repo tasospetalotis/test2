@@ -36,7 +36,6 @@ function addProduct() {
   }
 }
 
-
 function deleteCategory() {
   var categorySelector = document.getElementById('categoryToDelete');
   var selectedCategoryIndex = categorySelector.selectedIndex;
@@ -74,9 +73,9 @@ function deleteProduct() {
       loadProducts();
     }
   } else {
-    alert('Please select a category and a product to
-
-
+    alert('Please select a category and a product to delete.');
+  }
+}
 
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
@@ -122,31 +121,4 @@ function loadProducts() {
   } else {
     productSelector.innerHTML = '';
   }
-}
-
-function deleteProduct() {
-  var categorySelector = document.getElementById('categoryForProductToDelete');
-  var selectedCategoryIndex = categorySelector.selectedIndex;
-  var productSelector = document.getElementById('productToDelete');
-  var selectedProductIndex = productSelector.selectedIndex;
-
-  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
-    var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-
-    var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
-    if (confirmDelete) {
-      // Instead of directly deleting, mark as hidden
-      categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].hidden = true;
-      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
-
-      // Refresh the product selector immediately to include both visible and hidden products
-      loadProducts();
-    }
-  } else {
-    alert('Please select a category and a product to delete.');
-  }
-}
-
-
-
 }
