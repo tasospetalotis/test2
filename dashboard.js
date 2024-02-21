@@ -1,15 +1,18 @@
 function login() {
-  var username = document.getElementById('username').value;
-  var password = document.getElementById('password').value;
+  var usernameInput = document.getElementById('username');
+  var passwordInput = document.getElementById('password');
+  var loginForm = document.getElementById('loginForm');
+  var dashboard = document.getElementById('dashboard');
 
-  if (username === 'tasos' && password === '12345') {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+  if (usernameInput.value === 'tasos' && passwordInput.value === '12345') {
+    loginForm.style.display = 'none';
+    dashboard.style.display = 'block';
     loadCategories();
   } else {
     alert('Invalid username or password');
   }
 }
+
 
 function addCategory() {
   var categoryName = document.getElementById('categoryName').value;
