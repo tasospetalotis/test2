@@ -121,19 +121,24 @@ function loadCategories() {
 }
 
 function loadProducts() {
-  var categorySelector = document.getElementById('categorySelector');
+  var categorySelector = document.getElementById('categoryForProductToDelete');
   var selectedCategoryIndex = categorySelector.selectedIndex;
-  var productSelector = document.getElementById('productSelector');
-  productSelector.innerHTML = '';
-
+  var productSelector = document.getElementById('productToDelete');
+  
   if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
     var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
+
+    productSelector.innerHTML = '';
 
     selectedCategory.products.forEach(function (product) {
       var option = document.createElement('option');
       option.text = product.name;
       productSelector.add(option);
     });
+  } else {
+    productSelector.innerHTML = '';
   }
+}
+
 }
