@@ -28,13 +28,14 @@ function addProduct() {
 
   if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
-    categoriesAndProducts[selectedCategoryIndex].products.push({ name: productName, price: productPrice });
+    categoriesAndProducts[selectedCategoryIndex].products.push({ name: productName, price: productPrice, hidden: false });
     localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
     loadCategories();
   } else {
     alert('Please select a category.');
   }
 }
+
 
 function deleteCategory() {
   var categorySelector = document.getElementById('categoryToDelete');
@@ -62,7 +63,8 @@ function deleteProduct() {
 
     var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
     if (confirmDelete) {
-      categoriesAndProducts[selectedCategoryIndex].products.splice(selectedProductIndex, 1);
+      // Instead of directly deleting, mark as hidden
+      categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].hidden = true;
       localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
       loadProducts(); // update the product selector after product deletion
     }
@@ -70,6 +72,7 @@ function deleteProduct() {
     alert('Please select a category and a product to delete.');
   }
 }
+
 
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
@@ -108,11 +111,15 @@ function loadProducts() {
     productSelector.innerHTML = '';
 
     selectedCategory.products.forEach(function (product) {
-      var option = document.createElement('option');
-      option.text = product.name;
-      productSelector.add(option);
+      if (!product.hidden) {
+        var option = document.createElement('option');
+        option.text = product.name;
+        productSelector.add(option);
+      }
     });
   } else {
     productSelector.innerHTML = '';
   }
+}
+
 }
