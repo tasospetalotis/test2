@@ -60,27 +60,39 @@ function deleteProduct() {
   var categorySelector = document.getElementById('categoryForProductToDelete');
   var selectedCategoryIndex = categorySelector.selectedIndex;
   var productSelector = document.getElementById('productToDelete');
-  var selectedProductIndex = productSelector.selectedIndex;
 
-  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
+  if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
+    var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
 
-    var confirmDelete = confirm("Are you sure you want to delete the product '" + categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].name + "'?");
-    if (confirmDelete) {
-      // Instead of directly deleting, mark as hidden
-      categoriesAndProducts[selectedCategoryIndex].products[selectedProductIndex].hidden = true;
-      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+    // Check if products exist in the selected category
+    if (selectedCategory.products.length > 0) {
+      var selectedProductIndex = productSelector.selectedIndex;
 
-      // Remove the option from the product selector
-      productSelector.remove(selectedProductIndex);
+      if (selectedProductIndex !== -1) {
+        var confirmDelete = confirm("Are you sure you want to delete the product '" + selectedCategory.products[selectedProductIndex].name + "'?");
+        if (confirmDelete) {
+          // Instead of directly deleting, mark as hidden
+          selectedCategory.products[selectedProductIndex].hidden = true;
+          localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
 
-      // Update the product selector after product deletion
-      loadProducts();
+          // Remove the option from the product selector
+          productSelector.remove(selectedProductIndex);
+
+          // Update the product selector after product deletion
+          loadProducts();
+        }
+      } else {
+        alert('Please select a product to delete.');
+      }
+    } else {
+      alert('No products in the selected category to delete.');
     }
   } else {
-    alert('Please select a category and a product to delete.');
+    alert('Please select a category.');
   }
 }
+
 
 function loadCategories() {
   var categorySelector = document.getElementById('categorySelector');
