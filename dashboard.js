@@ -62,18 +62,24 @@ function deleteProduct() {
   var productSelector = document.getElementById('productToDelete');
   var selectedProductIndex = productSelector.selectedIndex;
 
-  if (selectedCategoryIndex !== -1 && selectedProductIndex !== -1) {
+  if (selectedCategoryIndex !== -1) {
     var categoriesAndProducts = JSON.parse(localStorage.getItem('categoriesAndProducts')) || [];
     var selectedCategory = categoriesAndProducts[selectedCategoryIndex];
 
-    var confirmDelete = confirm("Are you sure you want to delete the product '" + selectedCategory.products[selectedProductIndex].name + "'?");
-    if (confirmDelete) {
-      // Instead of directly deleting, mark as hidden
-      selectedCategory.products[selectedProductIndex].hidden = true;
-      localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
+    if (selectedProductIndex !== -1) {
+      var selectedProduct = selectedCategory.products[selectedProductIndex];
+      
+      var confirmDelete = confirm("Are you sure you want to delete the product '" + selectedProduct.name + "'?");
+      if (confirmDelete) {
+        // Instead of directly deleting, mark as hidden
+        selectedProduct.hidden = true;
+        localStorage.setItem('categoriesAndProducts', JSON.stringify(categoriesAndProducts));
 
-      // Update the product selector after product deletion
-      loadProducts();
+        // Update the product selector after product deletion
+        loadProducts();
+      }
+    } else {
+      alert('Please select a product to delete.');
     }
   } else {
     alert('Please select a category and a product to delete.');
